@@ -72,9 +72,6 @@ def draw_pshields():
         screen.blit(label, (275, 75))
 
 
-
-
-
 def draw_mshields():
     pygame.draw.rect(screen, WHITE, (790, 10, 200, 10), 2)  # draw outline of pshield bar
     if mob_shields<30:
@@ -155,8 +152,6 @@ class Player(pygame.sprite.Sprite):
             self.total_power+=1
             self.player_shields-=1
           
-
-
 
         if self.rect.right > WIDTH: #if player goes off screen will reappear on other end
             self.rect.left = 0
@@ -266,7 +261,7 @@ class Mob(pygame.sprite.Sprite):
 
     def shoot(self): #enemy shoot
 
-        x=random.uniform(1,400) #picks a random number and if number under 5, CPU will shoot...
+        x=random.uniform(1,400) #picks a random number and if number under 20, CPU will shoot...
         if x<20:
             mphaser = Mphaser(self.rect.centerx, self.rect.top)
             all_sprites.add(mphaser)
@@ -357,7 +352,6 @@ class Mphaser(pygame.sprite.Sprite):
 
 #Load all game graphics
 background = pygame.image.load("space.jpg").convert()
-
 background_rect = background.get_rect()
 player_img = pygame.image.load("player.png").convert()
 player_img2 = pygame.image.load("pshield.jpg").convert()
@@ -370,7 +364,7 @@ enemy_weapon=pygame.image.load("enemyfire.png").convert()
 player_hit=False
 enemy_hit=False
 
-#start music
+#start music 
 #pygame.mixer.init()
 #pygame.mixer.music.load("music.mp3")
 #pygame.mixer.music.play(-1)
@@ -420,7 +414,6 @@ while running:
 
     #did player bullet hit the enemy?
 
-
     hits=pygame.sprite.groupcollide(pphasers,mobs,True,False)
 
     if hits:
@@ -446,10 +439,9 @@ while running:
     if mtime_hit+100>pygame.time.get_ticks() :
         m.image = pygame.transform.scale(enemy_img2, (50, 38)) #if hit show enemy shield bubble
 
-    screen.fill(BLACK)
-
+    screen.fill(BLACK) #draw screen
     screen.blit(background,background_rect)
-    all_sprites.draw(screen)
+    all_sprites.draw(screen) #update all sprite groups
     draw_pshields()
     draw_mshields()
     pygame.display.flip()
