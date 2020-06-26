@@ -371,10 +371,10 @@ player_hit=False
 enemy_hit=False
 
 #start music
-pygame.mixer.init()
-pygame.mixer.music.load("music.mp3")
-pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(5)
+#pygame.mixer.init()
+#pygame.mixer.music.load("music.mp3")
+#pygame.mixer.music.play(-1)
+#pygame.mixer.music.set_volume(5)
 
 
 
