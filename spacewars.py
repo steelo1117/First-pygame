@@ -7,11 +7,9 @@ from os import path
 #img_dir=path.join(path.dirname(__file__),'img')
 
 
-
-
 WIDTH = 1000
 HEIGHT = 800
-FPS = 75
+FPS = 60
 
 # define colors
 WHITE = (255, 255, 255)
@@ -160,7 +158,7 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top<0:
             self.rect.bottom=HEIGHT
         if self.rect.bottom>HEIGHT:
-            self.rect.top=0
+            self.rect.top=0 
 
         self.rect.x += self.xthrust #where player ship is drawn
         self.rect.y+=self.ythrust
@@ -239,23 +237,23 @@ class Mob(pygame.sprite.Sprite):
             self.facing='L'
             self.shoot()
             self.angle=90
-        if self.rect.right<player.rect.left: #and player.rect.left-self.rect.right>200:#if player is to the right
+        if self.rect.right<player.rect.left: #and player.rect.left-self.rect.right>200:#if player is to the right, turn to face player
             self.speedx=1
             self.facing='R'
             self.shoot()
             self.angle=270
-        if self.rect.top>player.rect.bottom: #and self.rect.top-player.rect.bottom>200: #if player is above enemy
+        if self.rect.top>player.rect.bottom: #and self.rect.top-player.rect.bottom>200: #if player is above enemy, turn to face player
             self.speedy=-1
             self.facing='U'
             self.shoot()
             self.angle=0
-        if self.rect.bottom<player.rect.top: #and player.rect.top-self.rect.bottom>200: #if player is below enemy
+        if self.rect.bottom<player.rect.top: #and player.rect.top-self.rect.bottom>200: #if player is below enemy, turn to face player
             self.speedy=1
             self.facing='D'
             self.shoot()
             self.angle=180
 
-        self.image = pygame.transform.rotate(m.original, self.angle) #update orientation of mob ship
+        self.image = pygame.transform.rotate(m.original, self.angle) #rotate enemy ship to face correct direction
 
 
 
@@ -267,7 +265,7 @@ class Mob(pygame.sprite.Sprite):
             all_sprites.add(mphaser)
             mphasers.add(mphaser)
             pygame.mixer.init()
-            effect = pygame.mixer.Sound('enemyfire.wav')
+            effect = pygame.mixer.Sound('enemyfire.wav') #enemy fire sound effect
             effect.play()
 
 
@@ -317,8 +315,6 @@ class Mphaser(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(enemy_weapon, (10, 7)) #resizes enemy fire
             #self.image = enemy_weapon
             self.image.set_colorkey(BLACK)
-            #self.image = pygame.Surface((5, 5))
-            #self.image.fill(YELLOW)
             self.rect = self.image.get_rect()
             self.rect.bottom = y
             self.rect.centerx = x
@@ -326,7 +322,7 @@ class Mphaser(pygame.sprite.Sprite):
             self.rect.bottom = y + 5
             self.speedy = -10
             self.speedx = -10
-            self.mphaserface = m.facing  # so bullets fire in direction ship last faced
+            self.mphaserface = m.facing  # bullets fire in direction ship last faced
 
     def update(self):
 
@@ -408,11 +404,11 @@ while running:
     all_sprites.update()
     all_sprites.draw(screen)
 
-    hits=pygame.sprite.spritecollide(asteroid,pphasers,True,False)
+    hits=pygame.sprite.spritecollide(asteroid,pphasers,True,False) 
     hits=pygame.sprite.spritecollide(asteroid,mphasers,True,False)
 
 
-    #did player bullet hit the enemy?
+    #did player fire hit the enemy?
 
     hits=pygame.sprite.groupcollide(pphasers,mobs,True,False)
 
@@ -423,7 +419,7 @@ while running:
     if mob_shields<=0:
         running=False #If mob loses shields, game is over...
 
-    #did mob bullet hit player?
+    #did mob fire hit player?
     hits = pygame.sprite.spritecollide(player,mphasers,True)
     if hits:
         player.player_shields -= 2
